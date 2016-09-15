@@ -107,3 +107,78 @@ function bestChange (amt, coins) {
 
 
 console.log(bestChange(14,[10,7,1]));
+
+console.log("merge sort");
+
+function mergeSort (arr) {
+  console.log(arr);
+  if (arr.length <= 1) return arr;
+
+  let mid = Math.floor(arr.length / 2);
+
+  let left = arr.slice(0, mid);
+  let right = arr.slice(mid);
+
+  merged = merge(
+    mergeSort(left),
+    mergeSort(right)
+  );
+
+  return merged;
+}
+
+function merge(left, right) {
+  console.log(`left is ${left}`);
+  console.log(`right is ${right}`);
+  merged = [];
+
+  while (left.length >= 1 && right.length >= 1) {
+    if (left[0] > right[0]) {
+      merged.push(right.shift());
+    } else {
+      merged.push(left.shift());
+    }
+  }
+
+  merged = merged.concat(left);
+  merged = merged.concat(right);
+
+  console.log(`merged is ${merged}`);
+
+  return merged;
+}
+
+
+let unsortedArr = [3, 1, 2, 6, 2, 9, 5, 7, 3, 1];
+
+// console.log(mergeSort(unsortedArr));
+
+console.log("subsets");
+
+Array.prototype.subsets = function() {
+  // console.log(`this is ${this}`);
+  if (this.length === 0) return [[]];
+
+  prev_subsets = this.slice(0, -1).subsets();
+  // console.log(`this.slice(1) is ${this.slice(0, -1)}`);
+  // console.log(`prev is ${prev_subsets}`);
+
+  new_subsets = [];
+  extra_el = this[this.length - 1];
+  prev_subsets.forEach( function(el) {
+    // console.log(`el is ${el}`);
+    // console.log(`this[0] is ${this[0]}`);
+
+    new_subsets = new_subsets.concat(
+      [el.concat([extra_el])]
+    );
+  });
+
+  // console.log(`prev is ${prev_subsets}`);
+  // console.log(`new is ${new_subsets}`);
+
+  return prev_subsets.concat(new_subsets);
+
+};
+
+console.log([2,3,4].subsets());
